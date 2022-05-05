@@ -2,20 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "3"
+    branch: refs/heads/main
+    commit: 2e8fccaf533f2301fceadf66710d4f82d7ab7d5b
+    createdBy: NathPost
+    deployTimestamp: "1651765559062"
+    deployment.kubernetes.io/revision: "1"
+    jobName: build-and-publish-docker-image
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"web"},"name":"web","namespace":"ingress-demo"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"web"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"web"},"name":"web"},"spec":{"containers":[{"env":[{"name":"CONTENT_API_URL","value":"http://api:3001"}],"image":"fabmedical603599.azurecr.io/content-web","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/","port":3000},"initialDelaySeconds":30,"periodSeconds":20,"timeoutSeconds":10},"name":"web","ports":[{"containerPort":3000,"hostPort":80,"protocol":"TCP"}],"resources":{"requests":{"cpu":"1000m","memory":"128Mi"}},"securityContext":{"privileged":false},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}}}
-  creationTimestamp: "2022-05-05T13:00:14Z"
-  generation: 3
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"web"},"name":"web","namespace":"ingress-demo"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"web"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"web"},"name":"web"},"spec":{"containers":[{"env":[{"name":"CONTENT_API_URL","value":"http://api:3001"}],"image":"fabmedical603599.azurecr.io/content-web:2276735088","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/","port":3000},"initialDelaySeconds":30,"periodSeconds":20,"timeoutSeconds":10},"name":"web","ports":[{"containerPort":3000,"hostPort":80,"protocol":"TCP"}],"resources":{"requests":{"cpu":"1000m","memory":"128Mi"}},"securityContext":{"privileged":false},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","imagePullSecrets":[{"name":"ingress-demo-secret"}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}}}
+    provider: GitHub
+    repository: NathPost/Fabmedical
+    run: "2276735088"
+    runUri: https://github.com/NathPost/Fabmedical/actions/runs/2276735088
+    workflow: content-web
+  creationTimestamp: "2022-05-05T15:45:59Z"
+  generation: 2
   labels:
     app: web
   name: web
   namespace: ingress-demo
-  resourceVersion: "97793"
-  uid: f53b3efc-3709-4334-9fae-c1b972b16b56
+  resourceVersion: "110022"
+  uid: 1942f24e-dddd-4cbb-8628-a7bee391c7c9
 spec:
   progressDeadlineSeconds: 600
-  replicas: 4
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -36,7 +46,7 @@ spec:
       - env:
         - name: CONTENT_API_URL
           value: http://api:3001
-        image: fabmedical603599.azurecr.io/content-web
+        image: fabmedical603599.azurecr.io/content-web:2276735088
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -51,36 +61,39 @@ spec:
         name: web
         ports:
         - containerPort: 3000
+          hostPort: 80
           protocol: TCP
         resources:
           requests:
-            cpu: 125m
+            cpu: "1"
             memory: 128Mi
         securityContext:
           privileged: false
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: ingress-demo-secret
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
 status:
-  availableReplicas: 4
+  availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2022-05-05T14:40:25Z"
-    lastUpdateTime: "2022-05-05T14:40:25Z"
+  - lastTransitionTime: "2022-05-05T15:45:59Z"
+    lastUpdateTime: "2022-05-05T15:45:59Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2022-05-05T13:00:14Z"
-    lastUpdateTime: "2022-05-05T14:41:11Z"
-    message: ReplicaSet "web-b4f78d94c" has successfully progressed.
+  - lastTransitionTime: "2022-05-05T15:45:59Z"
+    lastUpdateTime: "2022-05-05T15:46:28Z"
+    message: ReplicaSet "web-5ddcd57dfd" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
-  observedGeneration: 3
-  readyReplicas: 4
-  replicas: 4
-  updatedReplicas: 4
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

@@ -2,15 +2,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "2"
-  creationTimestamp: "2022-05-05T13:26:47Z"
-  generation: 5
+    branch: refs/heads/main
+    commit: 2e8fccaf533f2301fceadf66710d4f82d7ab7d5b
+    createdBy: NathPost
+    deployTimestamp: "1651765398740"
+    deployment.kubernetes.io/revision: "1"
+    jobName: build-and-publish-docker-image
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"api"},"name":"api","namespace":"ingress-demo"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"api"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"api"},"name":"api"},"spec":{"containers":[{"env":[{"name":"MONGODB_CONNECTION","valueFrom":{"secretKeyRef":{"key":"db","name":"cosmosdb"}}}],"image":"fabmedical603599.azurecr.io/content-api:2276735089","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/","port":3001},"initialDelaySeconds":30,"periodSeconds":20,"timeoutSeconds":10},"name":"api","ports":[{"containerPort":3001,"hostPort":3001,"protocol":"TCP"}],"resources":{"requests":{"cpu":"1000m","memory":"128Mi"}},"securityContext":{"privileged":false},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","imagePullSecrets":[{"name":"ingress-demo-secret"}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}}}
+    provider: GitHub
+    repository: NathPost/Fabmedical
+    run: "2276735089"
+    runUri: https://github.com/NathPost/Fabmedical/actions/runs/2276735089
+    workflow: content-api
+  creationTimestamp: "2022-05-05T15:43:22Z"
+  generation: 2
   labels:
     app: api
   name: api
   namespace: ingress-demo
-  resourceVersion: "89943"
-  uid: db4a16f4-2023-414e-9d31-3ac0dbca72b5
+  resourceVersion: "109437"
+  uid: a38016c2-bafe-4918-a1f7-deb4b3a9b10a
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -37,7 +49,7 @@ spec:
             secretKeyRef:
               key: db
               name: cosmosdb
-        image: fabmedical603599.azurecr.io/content-api
+        image: fabmedical603599.azurecr.io/content-api:2276735089
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -52,16 +64,19 @@ spec:
         name: api
         ports:
         - containerPort: 3001
+          hostPort: 3001
           protocol: TCP
         resources:
           requests:
-            cpu: 100m
+            cpu: "1"
             memory: 128Mi
         securityContext:
           privileged: false
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: ingress-demo-secret
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
@@ -69,19 +84,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2022-05-05T13:26:47Z"
-    lastUpdateTime: "2022-05-05T13:52:26Z"
-    message: ReplicaSet "api-6d74dcf89" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  - lastTransitionTime: "2022-05-05T13:58:38Z"
-    lastUpdateTime: "2022-05-05T13:58:38Z"
+  - lastTransitionTime: "2022-05-05T15:43:22Z"
+    lastUpdateTime: "2022-05-05T15:43:22Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  observedGeneration: 5
+  - lastTransitionTime: "2022-05-05T15:43:22Z"
+    lastUpdateTime: "2022-05-05T15:43:28Z"
+    message: ReplicaSet "api-56f4867f9f" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1
